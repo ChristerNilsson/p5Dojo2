@@ -1,1 +1,1 @@
-# p5Dojo2
+[wiki](https://github.com/ChristerNilsson/p5Dojo2/wiki)
