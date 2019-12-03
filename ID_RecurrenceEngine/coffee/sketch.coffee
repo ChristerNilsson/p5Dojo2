@@ -1,5 +1,8 @@
-as = []
-bs = []
+N = 10
+as = [] # integers
+bs = [] # integers
+abuttons = [] 
+bbuttons = [] 
 counter = null
 
 button4 = (prompt,click) ->
@@ -7,28 +10,37 @@ button4 = (prompt,click) ->
 	b.style.width = '25%'
 	b
 
-calc = -> 
-	sa = as.map((button) => int button.innerText)
-	sb = bs.map((button) => int button.innerText)
-	sb.unshift (a*b for [a,b] in _.zip(sa,sb)).reduce (acc,x) => acc+x 
-	sb.pop() 
-	as[i].innerText = sa[i] for i in range 8
-	bs[i].innerText = sb[i] for i in range 8
-	counter.innerText = 1 + int counter.innerText
+clr = ->
+	as = range(N).map () => 0
+	bs = range(N).map () => 0
+	show()
 
-clr = (arr) ->
-	arr[i].innerText = 0 for i in range 8
-	counter.innerText = 0
+back = ->
+	if bs.length == N then return
+	bs.shift()
+	as.pop()
+	show()
+
+forward = ->
+	bs.unshift (a*b for [a,b] in _.zip(bs,as)).reduce (acc,x) => acc+x 
+	as.push 0
+	show()
+
+show = -> 
+	abuttons[i].innerText = as[i] for i in range N
+	bbuttons[i].innerText = bs[i] for i in range N
+	counter.innerText = bs.length - N
 
 setup = ->
 	noCanvas()
-	for i in range 8
+	for i in range N
 		do (i) ->
-			button4 '-',         => as[i].innerText = -1 + int as[i].innerText
-			as.push button4 '0', => as[i].innerText =  1 + int as[i].innerText
-			button4 '-',         => bs[i].innerText = -1 + int bs[i].innerText
-			bs.push button4 '0', => bs[i].innerText =  1 + int bs[i].innerText
-	button4 'Calc', => calc()
-	button4 'ClrA', => clr as
+			button4 '-',               => show as[i]--
+			abuttons.push button4 '0', => show as[i]++
+			button4 '-',               => show bs[i]--
+			bbuttons.push button4 '0', => show bs[i]++
 	counter = button4 '0', =>
-	button4 'ClrB', => clr bs
+	button4 'Clear', clr
+	button4 'Back', back
+	button4 'Forward', forward
+	clr()
