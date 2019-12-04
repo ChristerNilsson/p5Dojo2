@@ -25,6 +25,7 @@ draw = ->
 	text state.count,100,100
 
 mousePressed = (event) ->
+	if event.x > width or event.y > height then return 
 	guess = int event.x/S + BASE * int event.y/S
 	state.count++
 	if guess <= state.secret then state.start = guess+1
