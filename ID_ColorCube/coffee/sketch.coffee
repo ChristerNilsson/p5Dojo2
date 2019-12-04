@@ -1,6 +1,6 @@
 state = {}
 
-reset = -> state = r:0, g:0, b:0, size:256, history:[]
+reset = -> state = r:0, g:0, b:0, size:256, history:[], hx:1
 
 dst = (x,y,z) => Math.sqrt(x*x+y*y+z*z)
 
@@ -20,7 +20,10 @@ draw = ->
 				quad 4*(x+40),4*(y+0), 4*(x+80),4*(y+0), 4*(x+70),4*(y+10), 4*(x+30),4*(y+10)
 				noStroke()
 				if dst(rr,gg,bb) < dst(255-rr,255-gg,255-bb) then fill 255,255,255 else fill 0,0,0
-				text hex(rr,2) + ' ' + hex(gg,2) + ' ' + hex(bb,2), 4*(x+48),4*(y+6)
+				if state.hx == 1
+					text hex(rr,2) + ' ' + hex(gg,2) + ' ' + hex(bb,2), 4*(x+48), 4*(y+6)
+				else
+					text rr + ' ' + gg + ' ' + bb, 4*(x+48), 4*(y+6)
 
 mousePressed = (event) ->
 	if state.size == 4 then return
@@ -36,6 +39,8 @@ mousePressed = (event) ->
 					state.g += g * state.size
 					state.b += b * state.size
 					return
+
+keyPressed = -> state.hx = 1 - state.hx
 
 undo = -> if state.history.length > 0 then [state.r,state.g,state.b,state.size] = state.history.pop()
 
