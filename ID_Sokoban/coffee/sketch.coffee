@@ -45,24 +45,24 @@ class Sokoban
 		rectMode CENTER
 		for j in range 12
 			for i in range 18
-				size = 10
+				size = 4*10
 				digit = @board[j][i]
 				fc 0.75
 				if digit == 0 then fc 1,0,0
 				if (digit & GREEN) == GREEN then fc 0,1,0
-				rect 15+10*i,15+10*j,size,size
+				rect 4*15+4*10*i,4*15+4*10*j,size,size
 				if (digit & BOX) == BOX
 					fc 1,1,0
-					size = 6
-					rect 15+10*i,15+10*j,size,size
+					size = 4*6
+					rect 4*15+4*10*i,4*15+4*10*j,size,size
 				if _.isEqual @man, [i,j]
 					fc 0,0,1
-					circle 15+10*i+0.5,15+10*j+0.5,3
-		textSize 30
+					circle 4*15+4*10*i+0.5,4*15+4*10*j+0.5,4*3
+		textSize 4*30
 		textAlign CENTER,CENTER
 		fc 1
-		text @level,30,165
-		text @moves,170,165
+		text @level,4*30,4*165
+		text @moves,4*170,4*165
 
 	move : (i,j) ->
 		if dist(i,j,@man[0],@man[1]) != 1 then return
@@ -84,20 +84,21 @@ class Sokoban
 				if @board[j][i] in [3,5] then return false
 		true
 
-	mousePressed : (mx,my) ->
-		for [x,y],i in @buttons
-			if dist(mx,my,x,y) <= 12
-				[di,dj] = [[0,-1],[1,0],[0,1],[-1,0]][i]
-				@move @man[0]+di,@man[1]+dj
+	# mousePressed : (mx,my) ->
+	# 	for [x,y],i in @buttons
+	# 		if dist(mx,my,x,y) <= 12
+	# 			[di,dj] = [[0,-1],[1,0],[0,1],[-1,0]][i]
+	# 			@move @man[0]+di,@man[1]+dj
 
 	undo : ->
 		@level--
 		@newGame()
 
 setup = ->
-	createCanvas 200,200
+	createCanvas 800,800
 	app = new Sokoban
 	app.reset()
+	button 'Undo', => app.undo()
 
 draw = -> app.draw()
 keyPressed = ->
