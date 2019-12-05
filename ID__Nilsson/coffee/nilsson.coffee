@@ -1,4 +1,4 @@
-nilsson_version = "1.5" # getParameters with 0 parameters fixed 
+nilsson_version = "1.6" 
 
 createAndAppend = (parent,type,attributes = {}) =>
 	elem = document.createElement type
