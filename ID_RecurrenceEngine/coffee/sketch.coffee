@@ -8,6 +8,7 @@ counter = null
 button4 = (prompt,click) ->
 	b = button prompt, click
 	b.style.width = '25%'
+	b.style.fontSize = '64px'
 	b
 
 clr = ->
