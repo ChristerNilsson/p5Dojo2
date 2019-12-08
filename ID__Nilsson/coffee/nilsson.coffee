@@ -1,12 +1,25 @@
-nilsson_version = "1.6" 
+nilsson_version = "2019-12-17" 
 
-createAndAppend = (parent,type,attributes = {}) =>
+# createAndAppend = (parent,type,attributes = {}) =>
+# 	elem = document.createElement type
+# 	parent.appendChild elem
+# 	elem[key] = attribute for key,attribute of attributes
+# 	elem
+
+# button = (prompt,click) => createAndAppend document.body, 'button', {innerText:prompt, onclick:click}
+
+createAndAppend = (parent, type, attrs = {}) =>
 	elem = document.createElement type
 	parent.appendChild elem
-	elem[key] = attribute for key,attribute of attributes
+	elem.style[key] = attr for key,attr of attrs
 	elem
 
-button = (prompt,click) => createAndAppend document.body, 'button', {innerText:prompt, onclick:click}
+button = (text, click= ->, attrs={}) => 
+	elem = createAndAppend document.body, 'button', attrs
+	elem.innerText = text
+	elem.onclick = click
+	elem
+
 input = (keyup) => createAndAppend document.body, 'input', {onkeyup:keyup}
 div = => createAndAppend document.body, 'div'
 

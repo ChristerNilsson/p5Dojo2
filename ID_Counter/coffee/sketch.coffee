@@ -1,16 +1,24 @@
 counter = 0
 
-setup = -> 
+setup = ->
 	createCanvas 200,200
-	fc 1,1,0
-	sc()
-	textSize 100
-	textAlign CENTER,CENTER
 
-draw  = ->
-	bg 0.5
+	button 'Up', => counter++
+	button 'Down', => counter--
+	
+	# button 'Down', (=> counter--),
+	# 	position:'absolute'
+	# 	left:'200px'
+	# 	top:'50px'
+	# 	width:'100px'
+	# 	color: '#ff0'
+	# 	backgroundColor: 'black'
+	# 	fontSize: '200%'
+	
+	textAlign CENTER,CENTER
+	textSize 100
+	fc 1,0,0
+
+draw = ->
+	bg 0
 	text counter,100,100
-		
-up = -> counter++
-down = -> counter--
-mousePressed = (event) -> if event.y < 100 then up() else down()
